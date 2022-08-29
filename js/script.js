@@ -1,6 +1,6 @@
 $(function () { //Same as document.addEventListener("DOMContentLoaded"...
   //Same as document.querySelector("#navbarToggle").addEventListener("blur",...
-  $("navbarToggle").blur(function (event) {
+  $("#navbarToggle").blur(function (event) {
     var screenWidth = window.innerWidth;
     if (screenWidth < 768) {
       $("#collapsable-nav").collapse('hide');
@@ -64,7 +64,7 @@ $(function () { //Same as document.addEventListener("DOMContentLoaded"...
     document.querySelector("#navHomeButton").className = classes;
 
     // Add 'active' to menu button if not already there
-    lasses = document.querySelector("#navMenuButton").className;
+    classes = document.querySelector("#navMenuButton").className;
   if (classes.indexOf("active") == -1) {
     classes += " active";
     document.querySelector("#navMenuButton").className = classes;
@@ -80,7 +80,7 @@ $(function () { //Same as document.addEventListener("DOMContentLoaded"...
     homeHtml,
     function (responseText) {
       document.querySelector("#main-content")
-        .innerHTML = responseText
+        .innerHTML = responseText;
     },
     false);
   });
@@ -118,9 +118,10 @@ $(function () { //Same as document.addEventListener("DOMContentLoaded"...
             // Switch CSS class active to menu button
             switchMenuToActive();
 
-            var categoriesViewHtml = buildCategoriesViewHtml(categories,
-                                                            categoriesTitleHtml,
-                                                            categoryHtml);
+            var categoriesViewHtml =
+              buildCategoriesViewHtml(categories,
+                                      categoriesTitleHtml,
+                                      categoryHtml);
             insertHtml("#main-content", categoriesViewHtml);
           },
           false);
@@ -128,8 +129,6 @@ $(function () { //Same as document.addEventListener("DOMContentLoaded"...
     false);
   };
 
-
-  
   // Using categories data and snippets html
   // build categories view HTML to be inserted into page 
   function buildCategoriesViewHtml(categories,
@@ -148,7 +147,9 @@ $(function () { //Same as document.addEventListener("DOMContentLoaded"...
       html =
         insertProperty(html, "name", name);
       html =
-        insertProperty(html, "short_name", short_name);
+        insertProperty(html, 
+                       "short_name", 
+                       short_name);
       finalHtml += html;
     }
 
@@ -159,21 +160,22 @@ $(function () { //Same as document.addEventListener("DOMContentLoaded"...
   // Builds HTML for the single category page
   // based on the data from the server
   function buildAndShowMenuItemsHTML (categoryMenuItems) {
+    // Load title snippet of menu items page
     $ajaxUtils.sendGetRequest(
       menuItemsTitleHtml,
       function (menuItemsTitleHtml) {
-        //Retrieve single menu item snipet
+        //Retrieve single menu item snippet
         $ajaxUtils.sendGetRequest(
           menuItemHtml,
           function (menuItemHtml) {
             // Switch CSS class active to menu button
             switchMenuToActive();
 
-            var menuItemHtml = 
+            var menuItemsViewHtml = 
               buildMenuItemsViewHtml(categoryMenuItems,
                                      menuItemsTitleHtml,
                                      menuItemHtml);
-            insertHtml("#main-content", menuItemsTitleHtml);
+            insertHtml("#main-content", menuItemsViewHtml);
           },
         false);
       },
@@ -193,11 +195,11 @@ function buildMenuItemsViewHtml(categoryMenuItems,
                    categoryMenuItems.category.name);
   menuItemsTitleHtml = 
     insertProperty(menuItemsTitleHtml,
-                   "special_instractions",
-                   categoryMenuItems.category.special_instractions);
+                   "special_instructions",
+                   categoryMenuItems.category.special_instructions);
   var finalHtml = menuItemsTitleHtml;
   finalHtml += "<section class='row'>";
-
+  
   // Loop over menu items
   var menuItems = categoryMenuItems.menu_items;
   var catShortName = categoryMenuItems.category.short_name;
@@ -241,7 +243,6 @@ function buildMenuItemsViewHtml(categoryMenuItems,
       html += 
         "<div class='clearfix visible-lg-block visible-md-block'></div>";
     }
-
     finalHtml += html;
   }
   
